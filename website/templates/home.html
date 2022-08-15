@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1 align="center">Characters</h1>
+<ul class="list-group list-group-flush" id="notes">
+  {% for char in chars %}
+  <li class="list-group-item">
+    {{ char.name }}
+    <button type="button" class="close" onClick="deleteID({{ char.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+
+<br />
+<form method="POST">
+  <h3 align="center">Add character</h3>
+  <div class="form-group">
+    <input
+      type="number"
+      class="form-control"
+      id="charid"
+      name="charid"
+      placeholder="Enter charater ID"
+    />
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock content%}
