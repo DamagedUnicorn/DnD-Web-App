@@ -12,11 +12,17 @@ def home():
 		charid = request.form.get("charid")
 
 		name = requests.get("https://character-service.dndbeyond.com/character/v3/character/" + str(charid)).json().get("data").get("name")
+		chars = Charactername.query.filter_by(charid=charid).first()
 
-		newCharacter = Charactername(charid=charid, name=name)
-		db.session.add(newCharacter)
-		db.session.commit()
-		flash("Character added!")
+		if not name:
+			flash("Invalid character ID", category="error")
+		elif chars:
+			flash("Character already added", category="error")
+		else:
+			newCharacter = Charactername(charid=charid, name=f"{charid} - {name}")
+			db.session.add(newCharacter)
+			db.session.commit()
+			flash("Character added!", category="success")
 
 	chars = Charactername.query.all()
 
