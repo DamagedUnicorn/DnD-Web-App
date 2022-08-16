@@ -19,7 +19,7 @@ def home():
 		elif chars:
 			flash("Character already added", category="error")
 		else:
-			newCharacter = Charactername(charid=charid, name=f"{charid} - {name}")
+			newCharacter = Charactername(charid=charid, name=name)
 			db.session.add(newCharacter)
 			db.session.commit()
 			flash("Character added!", category="success")
@@ -34,7 +34,8 @@ def dm():
 
 @views.route('/player')
 def player():
-	return render_template('player.html')
+	chars = Charactername.query.all()
+	return render_template('player.html', chars=chars)
 
 @views.route('/delete-id', methods=['POST'])
 def delete_id():

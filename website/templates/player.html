@@ -1,3 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}Player{% endblock %}
 {% block content %}This is the player page{% endblock %}
+{% block extranavbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbar"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbar">
+    <div class="navbar-nav">
+      {% for char in chars %}
+      <a class="nav-item nav-link" id="player" href="/player">{{ char.name }}<a/>
+      {% endfor %}
+    </div>
+  </div>
+</nav>
+{% endblock extranavbar %}
