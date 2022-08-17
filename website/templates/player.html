@@ -1,22 +1,33 @@
 {% extends 'base.html' %}
 {% block title %}Player{% endblock %}
-{% block content %}This is the player page{% endblock %}
-{% block extranavbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbar"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbar">
-    <div class="navbar-nav">
-      {% for char in chars %}
-      <a class="nav-item nav-link" id="player" href="/player">{{ char.name }}<a/>
-      {% endfor %}
-    </div>
-  </div>
-</nav>
-{% endblock extranavbar %}
+
+{% block content %}
+{% if state == 'passive' %}
+<h3>Passive page</h3>
+{% elif state == 'combat' %}
+<h3>Combat page</h3>
+{% endif %}
+<br />
+<h3>{{ character.name }}</h3>
+<h3>Level {{ character.level }} - {{ character.Class }}</h3>
+<h3>{{ character.race }}</h3>
+{% endblock %}
+
+{% block playernavbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbar2"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar2">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href = {{ url_for('views.player', charId=character.id, state='passive') }}>Passive</a>
+          <a class="nav-item nav-link" href = {{ url_for('views.player', charId=character.id, state='combat') }}>Combat</a>
+        </div>
+      </div>
+    </nav>
+{% endblock %}

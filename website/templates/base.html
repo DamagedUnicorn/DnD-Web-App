@@ -31,11 +31,24 @@
         <div class="navbar-nav">
           <a class="nav-item nav-link" id="home" href="/">Home</a>
           <a class="nav-item nav-link" id="dm" href="/dm">DM</a>
-          <a class="nav-item nav-link" id="player" href="/player">Player</a>
+
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Players
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          {% for char in chars %}
+          <a class="dropdown-item" href = {{ url_for('views.player', charId=char.charid, state='passive') }}>{{ char.name }}</a>
+          {% endfor %}
+        </div>
+        </li>
+
         </div>
       </div>
     </nav>
-    {% block extranavbar %}{% endblock extranavbar %}
+
+    {% block playernavbar %}{% endblock %}
+
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
