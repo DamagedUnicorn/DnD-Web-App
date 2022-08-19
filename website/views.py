@@ -4,6 +4,7 @@ from . import db
 import json
 import requests
 from DnD.character import Character
+from DnD.virtuelDice import roll
 
 # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
 
@@ -41,12 +42,14 @@ def dm():
 #	chars = Charactername.query.all()
 #	return render_template('player.html', chars=chars)
 
-@views.route('/player/<int:charId>/<state>')    #int has been used as a filter that only integer will be passed in the url otherwise it will give a 404 error
-def player(charId, state):  
-    #return ('ID: {}'.format(charId))
-    character = Character(charId)
-    chars = Charactername.query.all()
-    return render_template('player.html', character=character, chars=chars, state=state)
+@views.route('/player/<int:charId>/<state>', methods=['GET', 'POST'])    #int has been used as a filter that only integer will be passed in the url otherwise it will give a 404 error
+def player(charId, state):
+	values = (None, None)
+	if request.method == "POST":
+		values = (roll(1, 20)[1], int(request.form.get("abilityCheck")))
+	character = Character(charId)
+	chars = Charactername.query.all()
+	return render_template('player.html', character=character, chars=chars, state=state, values=values)
 
 
 @views.route('/delete-id', methods=['POST'])

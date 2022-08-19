@@ -2,16 +2,92 @@
 {% block title %}Player{% endblock %}
 
 {% block content %}
+<div class="container">
+<div class="top">
+<h4>{{ character.name }} | Level {{ character.level }} - {{ character.Class }}</h4>
+</div>
 {% if state == 'passive' %}
-<h3>Passive page</h3>
+<form method="POST">
+<div class="btn-group-vertical left" role="group" aria-label="abilitychecks">
+  <button type="submit" class="btn btn-primary buttonDEX btn-sm" value={{ character.abilityModifiers[0] }} name="abilityCheck" id="abilityCheck">
+    Acrobatics | {% if character.abilityModifiers[0] >= 0 %}+{% endif %}{{ character.abilityModifiers[0] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonWIS btn-sm" value={{ character.abilityModifiers[1] }} name="abilityCheck" id="abilityCheck">
+    Animal Handling | {% if character.abilityModifiers[1] >= 0 %}+{% endif %}{{ character.abilityModifiers[1] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonINT btn-sm" value={{ character.abilityModifiers[2] }} name="abilityCheck" id="abilityCheck">
+    Arcana | {% if character.abilityModifiers[2] >= 0 %}+{% endif %}{{ character.abilityModifiers[2] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonSTR btn-sm" value={{ character.abilityModifiers[3] }} name="abilityCheck" id="abilityCheck">
+    Athletics | {% if character.abilityModifiers[3] >= 0 %}+{% endif %}{{ character.abilityModifiers[3] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonCHA btn-sm" value={{ character.abilityModifiers[4] }} name="abilityCheck" id="abilityCheck">
+    Deception | {% if character.abilityModifiers[4] >= 0 %}+{% endif %}{{ character.abilityModifiers[4] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonINT btn-sm" value={{ character.abilityModifiers[5] }} name="abilityCheck" id="abilityCheck">
+    History | {% if character.abilityModifiers[5] >= 0 %}+{% endif %}{{ character.abilityModifiers[5] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonWIS btn-sm" value={{ character.abilityModifiers[6] }} name="abilityCheck" id="abilityCheck">
+    Insight | {% if character.abilityModifiers[6] >= 0 %}+{% endif %}{{ character.abilityModifiers[6] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonCHA btn-sm" value={{ character.abilityModifiers[7] }} name="abilityCheck" id="abilityCheck">
+    Intimidation | {% if character.abilityModifiers[7] >= 0 %}+{% endif %}{{ character.abilityModifiers[7] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonINT btn-sm" value={{ character.abilityModifiers[8] }} name="abilityCheck" id="abilityCheck">
+    Investigation | {% if character.abilityModifiers[8] >= 0 %}+{% endif %}{{ character.abilityModifiers[8] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonWIS btn-sm" value={{ character.abilityModifiers[9] }} name="abilityCheck" id="abilityCheck">
+    Medicin | {% if character.abilityModifiers[9] >= 0 %}+{% endif %}{{ character.abilityModifiers[9] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonINT btn-sm" value={{ character.abilityModifiers[10] }} name="abilityCheck" id="abilityCheck">
+    Nature | {% if character.abilityModifiers[10] >= 0 %}+{% endif %}{{ character.abilityModifiers[10] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonWIS btn-sm" value={{ character.abilityModifiers[11] }} name="abilityCheck" id="abilityCheck">
+    Perception | {% if character.abilityModifiers[11] >= 0 %}+{% endif %}{{ character.abilityModifiers[11] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonCHA btn-sm" value={{ character.abilityModifiers[12] }} name="abilityCheck" id="abilityCheck">
+    Performance | {% if character.abilityModifiers[12] >= 0 %}+{% endif %}{{ character.abilityModifiers[12] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonCHA btn-sm" value={{ character.abilityModifiers[13] }} name="abilityCheck" id="abilityCheck">
+    Persausion | {% if character.abilityModifiers[13] >= 0 %}+{% endif %}{{ character.abilityModifiers[13] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonINT btn-sm" value={{ character.abilityModifiers[14] }} name="abilityCheck" id="abilityCheck">
+    Religion | {% if character.abilityModifiers[14] >= 0 %}+{% endif %}{{ character.abilityModifiers[14] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonDEX btn-sm" value={{ character.abilityModifiers[15] }} name="abilityCheck" id="abilityCheck">
+    Slight of Hand | {% if character.abilityModifiers[15] >= 0 %}+{% endif %}{{ character.abilityModifiers[15] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonDEX btn-sm" value={{ character.abilityModifiers[16] }} name="abilityCheck" id="abilityCheck">
+    Stealth | {% if character.abilityModifiers[16] >= 0 %}+{% endif %}{{ character.abilityModifiers[16] }}
+  </button>
+  <button type="submit" class="btn btn-primary buttonWIS btn-sm" value={{ character.abilityModifiers[17] }} name="abilityCheck" id="abilityCheck">
+    Survival | {% if character.abilityModifiers[17] >= 0 %}+{% endif %}{{ character.abilityModifiers[17] }}
+  </button>
+</div>
+</form>
+
 {% elif state == 'combat' %}
-<h3>Combat page</h3>
+
+<form method="POST">
+<div class="btn-group-vertical left" role="group" aria-label="abilitychecks">
+  <button type="submit" class="btn btn-primary buttonDEX btn-sm" value="100" name="abilityCheck" id="abilityCheck">
+    Attack
+  </button>
+</div>
+</form>
+
 {% endif %}
-<br />
-<h3>{{ character.name }}</h3>
-<h3>Level {{ character.level }} - {{ character.Class }}</h3>
-<h3>{{ character.race }}</h3>
-{% endblock %}
+
+<div class="right">
+{% if values[0] != None %}
+<h2 style="text-align:center;border-width:1px; border-style:solid; border-color:#000000; padding: 0.5em;">
+  {{ values[0] }}{% if values[1] >= 0 %}+{% endif %}{{ values[1] }} = {{ values[0] + values[1] }}
+</h2>
+{% endif %}
+</div>
+
+</div>
+{% endblock content %}
 
 {% block playernavbar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">

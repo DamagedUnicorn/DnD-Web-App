@@ -1,0 +1,60 @@
+.buttonSTR {
+    color: #FFFFFF;
+    background-color: #994136
+}
+
+.buttonDEX {
+    color: #FFFFFF;
+    background-color: #495b4a
+}
+
+.buttonCON {
+    color: #FFFFFF;
+    background-color: #cd893b
+}
+
+.buttonINT {
+    color: #FFFFFF;
+    background-color: #3d5a80
+}
+
+.buttonWIS {
+    color: #FFFFFF;
+    background-color: #adadad
+}
+
+.buttonCHA {
+    color: #FFFFFF;
+    background-color: #98788b
+}
+
+.btn-group-vertical > .btn{
+    border-color: #000000
+}
+
+div.container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+div.top {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end; 1;
+}
+
+div.left {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2
+    grid-row-end: 2;
+}
+
+div.right {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end; 2;
+}
