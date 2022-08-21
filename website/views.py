@@ -23,7 +23,7 @@ def home():
 		elif chars:
 			flash("Character already added", category="error")
 		else:
-			newCharacter = Charactername(charid=charid, name=name)
+			newCharacter = Charactername(charid=charid, name=name, initiative=1)
 			db.session.add(newCharacter)
 			db.session.commit()
 			flash("Character added!", category="success")
@@ -34,7 +34,8 @@ def home():
 
 @views.route('/dm')
 def dm():
-	chars = Charactername.query.all()
+	#chars = Charactername.query.all()
+	chars = Charactername.query.order_by(Charactername.initiative.desc()).all()
 	return render_template('dm.html', chars=chars)
 
 #@views.route('/player')
@@ -46,7 +47,13 @@ def dm():
 def player(charId, state):
 	values = (None, None)
 	if request.method == "POST":
-		values = (roll(1, 20)[1], int(request.form.get("abilityCheck")))
+		if request.form.get("20") is not None:
+			values = (roll(1, 20)[1], int(request.form.get("20")))
+		elif request.form.get("1d4") is not None:
+			values = (roll(1, 4)[1], int(request.form.get("1d4")))
+		
+
+		
 	character = Character(charId)
 	chars = Charactername.query.all()
 	return render_template('player.html', character=character, chars=chars, state=state, values=values)

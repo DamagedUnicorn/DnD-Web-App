@@ -28,7 +28,16 @@
     background-color: #98788b
 }
 
+.buttonINITIATIVE {
+    color: #ffffff;
+    background-color: #ff0000
+}
+
 .btn-group-vertical > .btn{
+    border-color: #000000
+}
+
+.btn-group > .btn{
     border-color: #000000
 }
 
@@ -42,13 +51,20 @@ div.top {
     grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 1;
-    grid-row-end; 1;
+    grid-row-end: 1;
 }
 
 div.left {
     grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+div.leftmid {
+    grid-column-start: 2;
     grid-column-end: 2;
-    grid-row-start: 2
+    grid-row-start: 2;
     grid-row-end: 2;
 }
 
@@ -56,5 +72,23 @@ div.right {
     grid-column-start: 3;
     grid-column-end: 4;
     grid-row-start: 2;
-    grid-row-end; 2;
+    grid-row-end: 2;
+}
+
+.table {
+    border-spacing: 0;
+    margin: 1rem;
+    background-color: #f5f5f5;
+}
+
+.table__row:nth-child(even) {
+    background-color: #e5e5e5;
+}
+
+.table__header {
+    text-align: left;
+}
+
+.table__cell {
+    padding: 8px;
 }

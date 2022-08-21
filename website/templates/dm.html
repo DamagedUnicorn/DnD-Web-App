@@ -1,3 +1,32 @@
 {% extends 'base.html' %}
 {% block title %}DM{% endblock %}
-{% block content %}This is the DM page{% endblock %}
+
+{% block content %}
+<form method="POST">
+  <div class="left">
+    <div class="btn-group-vertical leftmid" role="group" aria-label="maybe">
+    <button type="submit" class="btn btn-primary btn-sm" value="100"  name="hmmm" id="hmmm">
+      Start Combat
+    </button>
+    <button type="submit" class="btn btn-primary btn-sm" value="100" name="hmmm" id="hmmm">
+      End Combat
+    </button>
+    </div>
+  </div>
+</form>
+
+<div class="right">
+  <table class="table">
+    <tr class="table__header">
+      <th class="table__cell">Name</th>
+      <th class="table__cell">Initiative</th>
+    </tr>
+    {% for char in chars %}
+      <tr class="table__row">
+      <td class="table__cell">{{ char.name }}</td>
+      <td class="table__cell">{{ char.initiative }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
