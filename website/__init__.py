@@ -16,7 +16,7 @@ def createApp():
 
 	app.register_blueprint(views, url_prefix='/')
 
-	from .models import Charactername
+	from .models import Charactername, Monster
 
 	create_database(app)
 
