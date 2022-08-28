@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Blueprint, render_template, request, flash, jsonify
 from .models import Charactername, Monster
 from . import db
