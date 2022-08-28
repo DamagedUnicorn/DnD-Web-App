@@ -36,19 +36,35 @@ def home():
 
 @views.route('/dm', methods=["GET", "POST"])
 def dm():
-
 	if request.method == "POST":
 		monsterIndex = request.form.get("monsterindex")
-		monsterJson = requests.get(f"https://www.dnd5eapi.co/api/monsters/{monsterIndex}/").json()
-		if monsterJson.get("error") != "Not found":
-			newMonster = Monster(name=monsterJson.get("name"),
-							     initiative=int(roll(1, 20)[1] + ((int(monsterJson.get("dexterity")) - 10) // 2)))
-			db.session.add(newMonster)
-			db.session.commit()
-			flash("Monster added!", category="success")
-		else:
-			flash("Invalid monster index", category="error")
+		if monsterIndex:
+			monsterJson = requests.get(f"https://www.dnd5eapi.co/api/monsters/{monsterIndex}/").json()
+			if monsterJson.get("error") != "Not found":
+				newMonster = Monster(name=monsterJson.get("name"),
+									initiative=int(roll(1, 20)[1] + ((int(monsterJson.get("dexterity")) - 10) // 2)),
+									HPmax=int(monsterJson.get("hit_points")),
+									HPcurrent=int(monsterJson.get("hit_points"))
+									)
+				db.session.add(newMonster)
+				db.session.commit()
+				flash("Monster added!", category="success")
+			else:
+				flash("Invalid monster index", category="error")
 
+		reqHPUp = request.form.get("HPchange")
+		if reqHPUp:
+			req = request.form["HP"]
+			upDown = req[0]
+			id = req[1:]
+			if upDown == "U":
+				mon = Monster.query.filter_by(id=id).first()
+				mon.HPcurrent += int(reqHPUp)
+				db.session.commit()
+			elif upDown == "D":
+				mon = Monster.query.filter_by(id=id).first()
+				mon.HPcurrent -= int(reqHPUp)
+				db.session.commit()
 
 	chars = Charactername.query.all()
 	mons = Monster.query.all()
@@ -56,16 +72,22 @@ def dm():
 	charsMons = chars + mons
 	unsortedInitiatives = []
 	for idx, item in enumerate(charsMons):
-		unsortedInitiatives.append(item.initiative)
-	unsortedInitiatives[unsortedInitiatives == None] = 0
+		if item.initiative is not None:
+			unsortedInitiatives.append(item.initiative)
+		else:
+			unsortedInitiatives.append(-99)
+	#print(unsortedInitiatives)
+	#if len(unsortedInitiatives) > 0:
+	#	unsortedInitiatives[unsortedInitiatives == None] = 0
 	sortedInitiatives = np.argsort(unsortedInitiatives)[::-1]
+	#print(sortedInitiatives)
 	#charsMons = [x for _, x in sorted(zip(sortedInitiatives, charsMons))[::-1]]
 
 	charsMonsSorted = []
 	for item in sortedInitiatives:
 		charsMonsSorted.append(charsMons[item])
 
-	isMonster = []	
+	isMonster = []
 
 	for idx, item in enumerate(charsMonsSorted):
 		try:
@@ -73,8 +95,11 @@ def dm():
 			isMonster.append(0)
 		except:
 			isMonster.append(1)
+	
+	# find all monster - for add monster menu
+	allMonsters = requests.get(f"https://www.dnd5eapi.co/api/monsters/").json().get("results")
 
-	return render_template('dm.html', chars=chars, charsMons=charsMonsSorted, isMonster=isMonster)
+	return render_template('dm.html', chars=chars, charsMons=charsMonsSorted, isMonster=isMonster, allMonsters=allMonsters)
 
 @views.route('/player/<int:charId>/<state>', methods=['GET', 'POST'])    #int has been used as a filter that only integer will be passed in the url otherwise it will give a 404 error
 def player(charId, state):

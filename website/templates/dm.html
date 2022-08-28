@@ -19,6 +19,7 @@
   <div class="left">
   <h3 align="center">Add monster</h3>
   <div class="form-group">
+    <!--
     <input
       type="text"
       class="form-control"
@@ -26,6 +27,12 @@
       name="monsterindex"
       placeholder="Enter monster index"
     />
+    -->
+    <select class="form-control" is="monsterindex" name="monsterindex">
+      {% for monster in allMonsters %}
+      <option value={{ monster.get("index") }}>{{ monster.get("name") }}</option>
+      {% endfor %}
+    </select>
   </div>
   <br />
   <button type="submit" class="btn btn-primary">Submit</button>
@@ -52,7 +59,18 @@
         {% endif %}
         {{ charMon.name }}
       </td>
-      <td class="table__cell">X/Y</td>
+      <td class="table__cell">
+
+        <form method="POST">
+          {% if isMonster[ loop.index0 ] == 1 %}
+          {{ charMon.HPcurrent }} / {{ charMon.HPmax }}&nbsp;&nbsp;
+          <input id="HPchange" type="number" placeholder="Enter HP" name="HPchange" style="width: 6em">
+          <button id="HPButtonUp" name="HP" value="U{{charMon.id}}" class="btn btn-primary btn-hpup btn-sm" type="submit">↑</button>
+          <button id="HPButtonDown" name="HP" value="D{{charMon.id}}" class="btn btn-primary btn-hpdown btn-sm" type="submit">↓</button>
+          {% endif %}
+        </td>
+        </form>
+
       <td class="table__cell">{{ charMon.initiative }}</td>
       </tr>
     {% endfor %}

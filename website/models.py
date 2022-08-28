@@ -10,3 +10,5 @@ class Monster(db.Model):
 	id         = db.Column(db.Integer, primary_key=True)
 	name       = db.Column(db.String(75))
 	initiative = db.Column(db.Integer)
+	HPmax      = db.Column(db.Integer)
+	HPcurrent  = db.Column(db.Integer)
