@@ -14,9 +14,10 @@ class Weapon:
     def setName(self, name):
         self.name = name
 
-    #def setDamage(self, die, numberOfDice):
-    #    self.die = die
-    #    self.numberOfDice = numberOfDice
+    def setDamage(self, die, numberOfDice, diceString):
+        self.die = die
+        self.numberOfDice = numberOfDice
+        self.diceString = diceString
 
     def setType(self, Type):
         self.Type = Type
@@ -46,6 +47,27 @@ class Weapon:
                             self.isProficient = True
                     elif val.get("subType") == self.Type:
                         self.isProficient = True
+                
+    def setToHitBonus(self, modifiers, proficiencyBonus):
+        if "Finesse" in self.properties:
+            bonus = max(modifiers)
+        else:
+            bonus = modifiers[0]
+        
+        if self.isProficient:
+            bonus += proficiencyBonus
+
+        self.toHitBonus = bonus
+    
+    def setDamageBonus(self, modifiers):
+        bonus = 0
+        if True: # if (mainHand) or (fightingStyle == dualWielder)
+            if "Finesse" in self.properties:
+                bonus += max(modifiers)
+            else:
+                bonus += modifiers[0]
+
+        self.damageBonus = bonus
 
 
         
