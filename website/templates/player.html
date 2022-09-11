@@ -123,6 +123,23 @@
     <br/>
     {% endfor %}
 
+    <p style="font-weight: bold;">Spells</p>
+
+    {% for spell in character.spells %}
+    <div class="btn-group leftmid" role="group" aria-label="maybe">
+      {{ spell.name }}&nbsp;&nbsp;
+      <button type="submit" class="btn btn-primary btn-sm" value={{ spell.toHitBonus }} name="1d20" id="1d20">
+        Hit
+      </button>
+      {% if spell.die != 0%}
+      <button type="submit" class="btn btn-primary btn-sm" value={{ spell.damageBonus }} name={{ spell.diceString }} id={{ spell.diceString }}>
+        Dmg
+      </button>
+      {% endif %}
+      </div>
+      <br/>
+    {% endfor %}
+
   </div>
 </form>
 

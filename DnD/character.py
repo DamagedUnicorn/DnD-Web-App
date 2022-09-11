@@ -250,6 +250,15 @@ class Character:
                             spell.setName(value.get("value"))
                             break
 
+                    spell.setDamage(spell_.get("definition").get("modifiers")[0].get("die").get("diceCount"),
+                                    spell_.get("definition").get("modifiers")[
+                        0].get("die").get("diceValue"),
+                        spell_.get("definition").get("modifiers")[0].get("die").get("diceString"))
+
+                    spell.setToHitBonus(
+                        self.Class, self.statsModifiers, self.proficiencyBonus)
+                    spell.setDamageBonus(self.Class, self.statsModifiers)
+
                     self.spells.append(spell)
 
     def hasStealthCheckAdvantage(self):
