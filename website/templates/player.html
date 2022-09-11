@@ -106,16 +106,18 @@
     <button type="submit" class="btn btn-primary btn-sm" value={{ weapon.toHitBonus }}  name="1d20" id="1d20">
       Hit
     </button>
+    {% if weapon.die != 0%}
     <button type="submit" class="btn btn-primary btn-sm" value={{ weapon.damageBonus }} name={{ weapon.diceString }} id={{ weapon.diceString }}>
       Dmg
     </button>
+    {% endif %}
     </div>
     <br/>
     {% endfor %}
 
     {% for action in character.attackActions %}
     {{ action.name }}&nbsp;&nbsp;
-    <button type="submit" class="btn btn-primary btn-sm" value="0" name={{ action.diceString }} id={{ action.diceString }}>
+    <button type="submit" style="border-color: #000000" class="btn btn-primary btn-sm" value="0" name={{ action.diceString }} id={{ action.diceString }}>
       Roll
     </button>
     <br/>

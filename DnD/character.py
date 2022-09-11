@@ -192,9 +192,9 @@ class Character:
                 weapon.setType(item.get("definition").get("type"))
 
                 properties = []
+                weapon.setIsOffHand(foundMainHand)
                 for prop in item.get("definition").get("properties"):
                     if prop.get("name") == "Light":
-                        weapon.setIsOffHand(foundMainHand)
                         foundMainHand = True
                     properties.append(prop.get("name"))
                 weapon.setProperties(properties)
@@ -207,10 +207,13 @@ class Character:
 
                 weapon.isWeaponProficient(self.data)
 
-                weapon.setDamage(item.get("definition").get("damage").get("diceValue"),
-                                 item.get("definition").get(
-                                     "damage").get("diceCount"),
-                                 item.get("definition").get("damage").get("diceString"))
+                if isinstance(item.get("definition").get("damage"), dict):
+                    weapon.setDamage(item.get("definition").get("damage").get("diceValue"),
+                                     item.get("definition").get(
+                        "damage").get("diceCount"),
+                        item.get("definition").get("damage").get("diceString"))
+                else:
+                    weapon.setDamage(0, 0, "0")
 
                 weapon.setToHitBonus(
                     self.statsModifiers[:2], self.proficiencyBonus)
