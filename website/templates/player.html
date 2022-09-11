@@ -112,6 +112,11 @@
     </div>
     <br />
     {% endfor %}
+
+    {% for action in character.attackActions %}
+    <p>{{ action.name }}</p>
+    {% endfor %}
+
   </div>
 </form>
 

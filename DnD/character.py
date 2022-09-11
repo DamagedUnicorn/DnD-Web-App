@@ -10,6 +10,7 @@ import requests
 import numpy as np
 from DnD.weapon import Weapon
 from DnD.spell import Spell
+from DnD.attackAction import AttackAction
 
 
 class Character:
@@ -33,6 +34,7 @@ class Character:
         self.getSavingThrowMultipliers()
         self.getAbilityModifers()
         self.findEquippedWeapons()
+        self.findAttackActions()
         self.findSpells()
         self.hasStealthCheckAdvantage()
 
@@ -181,6 +183,8 @@ class Character:
     def findEquippedWeapons(self):
         self.equippedWeapons = []
 
+        foundMainHand = False
+
         for item in self.data["inventory"]:
             if (item.get("equipped")) and (item.get("definition").get("filterType") == "Weapon"):
                 weapon = Weapon()
@@ -189,6 +193,9 @@ class Character:
 
                 properties = []
                 for prop in item.get("definition").get("properties"):
+                    if prop.get("name") == "Light":
+                        weapon.setIsOffHand(foundMainHand)
+                        foundMainHand = True
                     properties.append(prop.get("name"))
                 weapon.setProperties(properties)
 
@@ -211,6 +218,20 @@ class Character:
                 weapon.setDamageBonus(self.statsModifiers[:2])
 
                 self.equippedWeapons.append(weapon)
+
+    def findAttackActions(self):
+        self.attackActions = []
+        for origin in ["race", "class", "background", "item", "feat"]:
+            items = self.data.get("actions").get(origin)
+            if isinstance(items, list):
+                for item in items:
+                    if isinstance(item.get("dice"), dict):
+                        action = AttackAction()
+                        action.setName(item.get("name"))
+                        action.setDamage(item.get("dice").get("diceCount"),
+                                         item.get("dice").get("diceValue"),
+                                         item.get("dice").get("diceString"))
+                        self.attackActions.append(action)
 
     def findSpells(self):
         self.spells = []

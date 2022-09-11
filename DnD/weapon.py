@@ -61,13 +61,20 @@ class Weapon:
     
     def setDamageBonus(self, modifiers):
         bonus = 0
-        if True: # if (mainHand) or (fightingStyle == dualWielder)
+        if not self.isOffHand: #or (fightingStyle == dualWielder)
             if "Finesse" in self.properties:
                 bonus += max(modifiers)
             else:
                 bonus += modifiers[0]
 
         self.damageBonus = bonus
+    
+    def setIsOffHand(self, yes):
+        if yes:
+            self.isOffHand = True
+        else:
+            self.isOffHand = False
+
 
 
         
