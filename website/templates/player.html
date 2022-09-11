@@ -110,11 +110,15 @@
       Dmg
     </button>
     </div>
-    <br />
+    <br/>
     {% endfor %}
 
     {% for action in character.attackActions %}
-    <p>{{ action.name }}</p>
+    {{ action.name }}&nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary btn-sm" value="0" name={{ action.diceString }} id={{ action.diceString }}>
+      Roll
+    </button>
+    <br/>
     {% endfor %}
 
   </div>
@@ -125,7 +129,13 @@
 <div class="right">
 {% if values[0] != None %}
 <h2 style="text-align:center;border-width:1px; border-style:solid; border-color:#000000; padding: 0.5em;">
-  {{ values[0] }}{% if values[1] >= 0 %}+{% endif %}{{ values[1] }} = {{ values[0] + values[1] }}
+  {% if values[1] > 0 %}
+  {{ values[0] }} + {{ values[1] }} = {{ values[0] + values[1] }}
+  {% elif values[1] < 0 %}
+  {{ values[0] }}  {{ values[1] }} = {{ values[0] + values[1] }}
+  {% else %}
+  {{ values[0] }}
+  {% endif %}
 </h2>
 {% endif %}
 </div>
