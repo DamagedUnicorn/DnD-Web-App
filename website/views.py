@@ -17,17 +17,21 @@ def home():
     if request.method == "POST":
         charid = request.form.get("charid")
 
-        name = requests.get("https://character-service.dndbeyond.com/character/v3/character/" +
-                            str(charid)).json().get("data").get("name")
+        # name = requests.get("https://character-service.dndbeyond.com/character/v3/character/" +
+        #                     str(charid)).json().get("data").get("name")
+        char = Character(charid)
         chars = Charactername.query.filter_by(charid=charid).first()
 
-        if not name:
+        if not char.name:
             flash("Invalid character ID", category="error")
         elif chars:
             flash("Character already added", category="error")
         else:
             newCharacter = Charactername(
-                charid=charid, name=name, initiative=None)
+                charid=charid, name=char.name, initiative=None,
+                passivePerception=int(char.abilityModifiers[11])+10,
+                passiveInvestigation=int(char.abilityModifiers[8])+10,
+                passiveInsight=int(char.abilityModifiers[6])+10)
             db.session.add(newCharacter)
             db.session.commit()
             flash("Character added!", category="success")
